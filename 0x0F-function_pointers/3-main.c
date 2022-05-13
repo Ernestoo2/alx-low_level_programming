@@ -1,38 +1,44 @@
-#include "function_pointers.h"
 #include "3-calc.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /**
- * main - prints the result of an operation, followed by a new line
- *
- * @argc: argument count
- * @argv: arguments passed
- *
- * Return: result of the operation
- */
+ * main - Prints result of an operation
+ * @argc: Number of arguments
+ * @argv: Value of arguments
+ * Return: Returns an int.
+**/
 
 int main(int argc, char *argv[])
 {
-	int num1;
-	int num2;
-	int calc;
-	int (*ptr)(int, int);
 
-	if (argc != 4)
-		printf("Error\n"), exit(98);
-	if (argv[2][1] != '\0')
-		printf("Error\n"), exit(99);
+if (argc != 4)
+{
+printf("Error\n");
+exit(98);
+}
 
-	ptr = get_op_func(argv[2]);
-	if (ptr != NULL)
-	{
-		num1 = atoi(argv[1]);
-		num2 = atoi(argv[3]);
-		calc = (*ptr)(num1, num2);
-		printf("%d\n", calc);
-	}
-	else
-		printf("Error\n"), exit(99);
-	return (0);
+if (
+(strcmp(argv[2], "+") &&
+strcmp(argv[2], "-") &&
+strcmp(argv[2], "*") &&
+strcmp(argv[2], "/") &&
+strcmp(argv[2], "%"))
+)
+{
+printf("Error\n");
+exit(99);
+}
+
+if ((strcmp(argv[2], "/") == 0 || strcmp(argv[2], "%") == 0)
+&& atoi(argv[3]) == 0)
+{
+printf("Error\n");
+exit(100);
+}
+
+printf("%d\n", (*get_op_func(argv[2]))(atoi(argv[1]), atoi(argv[3])));
+
+return (0);
 }
